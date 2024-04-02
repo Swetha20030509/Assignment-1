@@ -33,49 +33,60 @@ class Book
 		System.out.println("Author Name "+authorName);
 		System.out.println("Book count "+count);
 	}
-	
 }
 public class Bookdemo {
 	public boolean isAuthorizedPerson(String username,String password)
 	{
-		if(username.equals("swetha")&&password.equals("1234"))
+		Credials credials=new Credials();
+		if(username.equals(credials.getUserName())&&password.equals(credials.getPassword()))
 		{
 			return true;
 		}
 		return false;
 	}
-
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
 		Bookdemo bookdemo=new Bookdemo();
 		Book book=new Book(1,"java","james",5);
-		System.out.println("Enter the user name");
-		String userName=sc.nextLine();
-		System.out.println("Enter the password");
-		String password=sc.nextLine();
-		if(bookdemo.isAuthorizedPerson(userName,password))
+		book.displayBookDetail();
+		System.out.println("do you want update books");
+		System.out.println("1.yes");
+		System.out.println("2.No");
+		switch(sc.nextLine())
 		{
-			System.out.println("1.Update Book");
-			System.out.println("2.Exit");
-			System.out.println("Enter your choice");
-			switch(sc.nextInt())
-			{
-			case 1:
-				bookdemo.menu(book);
+			case "yes":
+				bookdemo.init(bookdemo,book);
 				break;
-			case 2:
-				System.exit(0);
+			case "No":
+				book.displayBookDetail();
 				break;
-			}
-			
-		}
-		else
-		{
-			System.out.println("Invalid username and password");
 		}
 
 	}
+	public void init(Bookdemo bookdemo,Book book)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the user name");
+		String userName = sc.nextLine();
+		System.out.println("Enter the password");
+		String password = sc.nextLine();
+		if (bookdemo.isAuthorizedPerson(userName, password)) {
+			System.out.println("1.Update Book");
+			System.out.println("2.Exit");
+			System.out.println("Enter your choice");
+			switch (sc.nextInt()) {
+				case 1:
+					bookdemo.menu(book);
+					break;
+				case 2:
+					System.exit(0);
+					break;
+			}
 
+		} else {
+			System.out.println("Invalid username and password");
+		}
+	}
 	private void menu(Book book) {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("1.Update book Name");
@@ -86,12 +97,12 @@ public class Bookdemo {
 		{
 			case 1:
 				System.out.println("Enter the book name");
-				String bookname=sc.nextLine();
+				String bookname=sc.next();
 				book.updateBookName(bookname);
 				break;
 			case 2:
 				System.out.println("Enter the author name");
-				String authorname=sc.nextLine();
+				String authorname=sc.next();
 				book.updateBookAuthor(authorname);
 				break;
 			case 3:
